@@ -2,6 +2,7 @@ import pygame
 
 from maze.cell import Cell
 from maze.generator import generate_maze
+from maze.solver import astar
 
 WINDOW_WIDTH: int = 801
 
@@ -31,10 +32,11 @@ def main() -> None:
     ]
 
     generate_maze(grid)
+    astar(grid)
 
     running: bool = True
     while running:
-        _ = clock.tick(60)
+        _ = clock.tick()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
