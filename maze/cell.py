@@ -29,6 +29,12 @@ class Cell:
                 self.HIGHLIGHTED_BOX_COLOUR,
                 pygame.Rect(self.pos.x, self.pos.y, self.tile_size, self.tile_size),
             )
+        else:
+            _ = pygame.draw.rect(
+                window,
+                pygame.Color(0, 0, 0),
+                pygame.Rect(self.pos.x, self.pos.y, self.tile_size, self.tile_size),
+            )
 
         if self.top:
             _ = pygame.draw.line(

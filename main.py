@@ -4,7 +4,7 @@ from maze.cell import Cell
 from maze.generator import generate_maze
 from maze.solver import astar
 
-WINDOW_WIDTH: int = 801
+WINDOW_WIDTH: int = 1001
 
 
 def update_window(
@@ -15,6 +15,8 @@ def update_window(
 
     for row in grid:
         for cell in row:
+            if not path:
+                cell.highlighted = False
             cell.draw(window)
 
     pygame.display.update()
@@ -28,8 +30,8 @@ def main() -> None:
 
     clock: pygame.Clock = pygame.Clock()
 
-    rows: int = 40
-    columns: int = 40
+    rows: int = 250
+    columns: int = 250
     tile_size: int = (WINDOW_WIDTH - 1) // rows
 
     grid: list[list[Cell]] = [
