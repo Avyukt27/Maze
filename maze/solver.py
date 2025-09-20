@@ -24,7 +24,7 @@ def _get_open_neighbors(cell: Cell, grid: list[list[Cell]]) -> list[Cell]:
     return neighbors
 
 
-def astar(grid: list[list[Cell]]) -> None:
+def astar(grid: list[list[Cell]]) -> list[Cell]:
     start: Cell = grid[0][0]
     end: Cell = grid[-1][-1]
 
@@ -40,11 +40,12 @@ def astar(grid: list[list[Cell]]) -> None:
         _, _, current = heapq.heappop(open_set)
 
         if current == end:
-            current.highlighted = True
+            path: list[Cell] = [current]
             while current in came_from:
                 current = came_from[current]
-                current.highlighted = True
-            return
+                path.append(current)
+            path.reverse()
+            return path
 
         for neighbor in _get_open_neighbors(current, grid):
             tentative_g: int = g_score[current] + 1
@@ -53,3 +54,5 @@ def astar(grid: list[list[Cell]]) -> None:
                 g_score[neighbor] = tentative_g
                 f_score[neighbor] = tentative_g + _heuristic(neighbor, end)
                 heapq.heappush(open_set, (f_score[neighbor], next(counter), neighbor))
+
+    return []

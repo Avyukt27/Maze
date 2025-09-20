@@ -7,7 +7,12 @@ from maze.solver import astar
 WINDOW_WIDTH: int = 801
 
 
-def update_window(window: pygame.Surface, grid: list[list[Cell]]) -> None:
+def update_window(
+    window: pygame.Surface, grid: list[list[Cell]], path: list[Cell]
+) -> None:
+    for cell in path:
+        cell.highlighted = True
+
     for row in grid:
         for cell in row:
             cell.draw(window)
@@ -32,7 +37,9 @@ def main() -> None:
     ]
 
     generate_maze(grid)
-    astar(grid)
+    path: list[Cell] = astar(grid)
+
+    show_path: bool = False
 
     running: bool = True
     while running:
@@ -42,7 +49,11 @@ def main() -> None:
             if event.type == pygame.QUIT:
                 running = False
 
-        update_window(window, grid)
+        keys: pygame.key.ScancodeWrapper = pygame.key.get_just_pressed()
+        if keys[pygame.K_s]:
+            show_path = not show_path
+
+        update_window(window, grid, path if show_path else [])
 
     pygame.quit()
 
